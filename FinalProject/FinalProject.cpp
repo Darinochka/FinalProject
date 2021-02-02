@@ -8,7 +8,7 @@
 
 using namespace std;
 
-vector <string> Polish(const string& function);
+vector <string> Polish(const string& source);
 
 map <int, double> CreateMapValues(const vector <string>& source,
     const int& xmin,
@@ -19,9 +19,11 @@ void Record(const map<int, double>& Values, const string& path) {
     ofstream output;
     output.open(path);
     for (const auto& [key, value] : Values) {
-        output << "x: " << key << "y: " << value << endl;
+        output << "x: " << key << " y: " << value << endl;
     }
+    cout << "Loaded successfully!" << endl;
 }
+
 int main() {
     string function, command, path;
     int xmin, xmax, step;
@@ -48,8 +50,8 @@ int main() {
         for (auto word : polishNotation) {
             cout << word << " ";
         }
+        cout << endl;
         Record(CreateMapValues(polishNotation, xmin, xmax, step), path);
-
     }
     else if (command == "about") {
 

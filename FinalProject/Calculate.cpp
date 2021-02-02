@@ -7,10 +7,10 @@
 using namespace std;
 
 double Calcul(const string& operation,
-    const int& firstNum,
-    const int& secondNum) {
+    const double& firstNum,
+    const double& secondNum) {
     if (operation == "^") {
-        return firstNum ^ secondNum;
+        return pow(firstNum,secondNum);
     }
     else if (operation == "*") {
         return firstNum * secondNum;
@@ -38,24 +38,26 @@ vector <string> FindFirstOperation(vector <string>& source) {
     firstNum = stod(source[indexOp - 2]);
     secondNum = stod(source[indexOp - 1]);
     resultCalc = Calcul(source[indexOp], firstNum, secondNum);
-    source.erase(source.begin() + indexOp - 2, source.begin() + indexOp);
-    source.insert(source.begin() + indexOp - 2, to_string(resultCalc));
-    if (source.size() != 1) {
-        return FindFirstOperation(source);
+    source.erase(source.begin() + indexOp - 2, source.begin() + indexOp+1);
+    if (source.empty()) {
+        source.push_back(to_string(resultCalc));
     }
     else {
-        return source;
+        source.insert(source.begin() + indexOp - 2, to_string(resultCalc));
     }
+    return source;
 }
 
 double Result(const vector <string>& source, const int& x) {
     vector <string> output = source;
     for (auto& word : output) {
         if (word == "x") {
-            word = x;
+            word = to_string(x);
         }
     }
-    FindFirstOperation(output);
+    while (output.size() != 1) {
+        FindFirstOperation(output);
+    }
     return stod(output.front());
 }
 
