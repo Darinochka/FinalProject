@@ -49,12 +49,9 @@ vector <string> Polish(const string& source) {
                 stack.pop_back();
             }
             else {
-                if (stack.empty()) {}
-                else {
-                    while (stack.size() - 1 >= 0 && op[stack.back()] >= op[temp]) {
-                        output.push_back(stack.back());
-                        stack.pop_back();
-                    }
+                while (stack.size() - 1 >= 0 && !stack.empty() && op[stack.back()] >= op[temp]) {
+                    output.push_back(stack.back());
+                    stack.pop_back();
                 }
                 stack.push_back(temp);
             }
