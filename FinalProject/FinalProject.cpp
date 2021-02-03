@@ -32,22 +32,22 @@ int main() {
     vector <string> polishNotation;
     vector <string> historyFunctions;
     cout << "This program will convert your function to reverse Polish notation, draw a tree," <<
-        "and write its data to a file. To get started, write 'function'.\n" <<
+        "and write its data to a file. To get started, write 'func'.\n" <<
         "If you want to see the history of your requests, enter 'history' \n" <<
         "For more information write 'about'\n";
-    while (_getch() != 27) {
+    while (true) {
         cin >> command;
-        if (command == "function") {
+        if (command == "func") {
             //ввод данных
             cout << "Please, input your function: ";
             cin >> function;
-            cout << "Please, input Xmin: ";
+            cout << "Input Xmin: ";
             cin >> xmin;
-            cout << "Please, input Xmax: ";
+            cout << "Input Xmax: ";
             cin >> xmax;
-            cout << "Please, input step: ";
+            cout << "Input step: ";
             cin >> step;
-            cout << "Please, input name file: ";
+            cout << "Input name file: ";
             cin >> path;
             //запись в новой функции в vector
             historyFunctions.push_back(function);
@@ -73,5 +73,10 @@ int main() {
                 }
             }
         }
+        else {
+            cout << "Incorrect command!" << endl;
+        }
     }
+    
+    return 0;
 }
