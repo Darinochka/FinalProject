@@ -28,7 +28,8 @@ double Calcul(const string& operation,
 
 vector <string> FindFirstOperation(vector <string>& source) {
     vector <string> op = { "+", "-", "*", "/", "^" };
-    double resultCalc, firstNum, secondNum;
+    double firstNum, secondNum;
+    string resultCalc;
     int indexOp;
     for (indexOp = 0; indexOp < source.size(); indexOp++) {
         if (find(begin(op), end(op), source[indexOp]) != op.end()) {
@@ -37,35 +38,44 @@ vector <string> FindFirstOperation(vector <string>& source) {
     }
     firstNum = stod(source[indexOp - 2]);
     secondNum = stod(source[indexOp - 1]);
-    resultCalc = Calcul(source[indexOp], firstNum, secondNum);
-    source.erase(source.begin() + indexOp - 2, source.begin() + indexOp+1);
-    if (source.empty()) {
-        source.push_back(to_string(resultCalc));
+    if (firstNum == secondNum == 0 && source[indexOp] == "^" || (secondNum == 0 && source[indexOp] == "/")) {
+        source.clear();
+        source.push_back("indefined");
+        return source;
     }
     else {
-        source.insert(source.begin() + indexOp - 2, to_string(resultCalc));
+        resultCalc = to_string(Calcul(source[indexOp], firstNum, secondNum));
+        source.erase(source.begin() + indexOp - 2, source.begin() + indexOp + 1);
+        if (source.empty()) {
+            source.push_back(resultCalc);
+        }
+        else {
+            source.insert(source.begin() + indexOp - 2, resultCalc);
+        }
+        if (source.size() != 1) {
+            return FindFirstOperation(source);
+        }
+        else {
+            return source;
+        }
     }
-    return source;
 }
 
-double Result(const vector <string>& source, const int& x) {
+string Result(const vector <string>& source, const int& x) {
     vector <string> output = source;
     for (auto& word : output) {
         if (word == "x") {
             word = to_string(x);
         }
     }
-    while (output.size() != 1) {
-        FindFirstOperation(output);
-    }
-    return stod(output.front());
+    return FindFirstOperation(output).front();
 }
 
-map <int, double> CreateMapValues(  const vector <string>& source,
+map <int, string> CreateMapValues(  const vector <string>& source,
                                     const int& xmin,
                                     const int& xmax,
                                     const int& step) {
-    map <int, double> resultMap;
+    map <int, string> resultMap;
     for (int x = xmin; x <= xmax; x += step) {
         resultMap[x] = Result(source, x);
     }

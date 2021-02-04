@@ -11,12 +11,12 @@ using namespace std;
 
 vector <string> Polish(const string& source);
 
-map <int, double> CreateMapValues(const vector <string>& source,
+map <int, string> CreateMapValues(const vector <string>& source,
     const int& xmin,
     const int& xmax,
     const int& step);
 
-void Record(const string& function, const map<int, double>& Values, const string& path) {
+void Record(const string& function, const map<int, string>& Values, const string& path) {
     ofstream output;
     output.open(path);
     output << "Calculate result of " << function << endl;

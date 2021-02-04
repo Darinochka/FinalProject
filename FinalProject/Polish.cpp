@@ -3,6 +3,7 @@
 #include <list>
 #include <map>
 #include <string>
+#include <stack>
 
 using namespace std;
 
@@ -12,7 +13,7 @@ vector <string> Polish(const string& source) {
     int length;
     string function;
     vector <string> output;
-    list <string> stack;
+    stack <string> stk;
     map <string, int> op = { {"^", 3},
                             {"*", 2},
                             {"/", 2},
@@ -38,29 +39,29 @@ vector <string> Polish(const string& source) {
             key = true;
             if (word == '(') {
                 neg = true;
-                stack.push_back(temp);
+                stk.push(temp);
             }
             else if (word == ')') {
                 neg = false;
-                while (stack.back() != "(") {
-                    output.push_back(stack.back());
-                    stack.pop_back();
+                while (stk.top() != "(") {
+                    output.push_back(stk.top());
+                    stk.pop();
                 }
-                stack.pop_back();
+                stk.pop();
             }
             else {
-                while (stack.size() - 1 >= 0 && !stack.empty() && op[stack.back()] >= op[temp]) {
-                    output.push_back(stack.back());
-                    stack.pop_back();
+                while (stk.size() - 1 >= 0 && !stk.empty() && op[stk.top()] >= op[temp]) {
+                    output.push_back(stk.top());
+                    stk.pop();
                 }
-                stack.push_back(temp);
+                stk.push(temp);
             }
         }
     }
 
-    for (int i = 0; i < stack.size(); i++) {
-        output.push_back(stack.back());
-        stack.pop_back();
+    for (int i = 0; i < stk.size(); i++) {
+        output.push_back(stk.top());
+        stk.pop();
     }
     return output;
 }
