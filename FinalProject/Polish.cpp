@@ -4,26 +4,19 @@
 #include <map>
 #include <string>
 #include <stack>
-
 using namespace std;
 
 
-vector <string> Polish(const string& source) {
-    bool neg, key = true;
+vector <string> Polish(const string& function) {
+    bool neg = false, key = true;
     int length;
-    string function;
     vector <string> output;
     stack <string> stk;
     map <string, int> op = { {"^", 3},
                             {"*", 2},
                             {"/", 2},
                             {"+", 1},
-                            {"-", 1} };
-    for (const auto& word : source) {
-        if (word != ' ') {
-            function += word;
-        }
-    }
+                            {"-", 1}, };
     for (const char& word : function) {
         string temp(1, word);
         if (isdigit(word) || word == 'x' || (word == '-' && neg)) {
