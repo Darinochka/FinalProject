@@ -63,32 +63,24 @@ void InputArguments(int& xmin, int& xmax, int& step) {
 
 void CheckFunction(const string& function) {
     bool key = false, //=false, если до текущего стоял знак или (
-         neg = false; //=true если 
-    int count = 0;
+         neg = false; //=true если (-
+    int countBrackets = 0;
     vector <char> op = { '+', '-', '*', '/', '^' };
     for (int i = 0; i < function.size(); i++) {
         if (isdigit(function[i]) && !key) {
             key = (!(i == function.size() || isdigit(function[i + 1])));
-            if (neg) {
-                if (function[i+1] == ')') {
-                    neg = false;
-                }
-            }
+            neg = neg && function[i+1] == ')' ? false : neg;
         }
         else if (function[i] == 'x' && !key) {
             key = true;
-            if (neg) {
-                if (function[i+1] == ')') {
-                    neg = false;
-                }
-            }
+            neg = neg && function[i + 1] == ')' ? false : neg;
         }
         else if (function[i] == '(' && !key && !neg) {
             neg = (function[i + 1] == '-');
-            count++;
+            countBrackets++;
         }
         else if (function[i] == ')' && key && !neg) {
-            count--;
+            countBrackets--;
         }
         else if (i != 0 && i != function.size()-1) {
             if (function[i] == '-' && function[i-1] == '(' && neg) {}
@@ -103,7 +95,7 @@ void CheckFunction(const string& function) {
             throw exception();
         }
     }
-    if (count != 0) {
+    if (countBrackets != 0) {
         throw exception();
     }
 }

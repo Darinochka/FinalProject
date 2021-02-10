@@ -50,7 +50,7 @@ vector <string> FindFirstOperation(vector <string>& source) {
             source.push_back(resultCalc);
         }
         else {
-            source.insert(source.begin() + indexOp - 2, resultCalc);
+             source.insert(source.begin() + (indexOp - 2), 1, resultCalc);
         }
         if (source.size() != 1) {
             return FindFirstOperation(source);
