@@ -5,6 +5,7 @@
 #include <list>
 #include <cctype>
 #include <map>
+#include <cstring>
 #include <conio.h>
 
 using namespace std;
@@ -17,8 +18,10 @@ map <int, string> CreateMapValues(  const vector <string>& source,
                                     const int& step);
 
 void CheckPath(const string& path) {
-    ofstream output(path);
-    if (!output) {
+    char temp[5];
+    path.copy(temp, 4, path.size() - 4);
+    temp[4] = '\0';
+    if (strcmp(temp, ".txt") != 0) {
         throw exception();
     }
 }
@@ -166,6 +169,12 @@ int main() {
             //рисовка дерева
         } else if (command == "history") {
             PrintHistory(historyFunctions);
+        }
+        else if (command == "about") {
+            cout << "You can use only INTEGER numbers. \n " <<
+                "You can use +, -, ^, *, /, (, ) \n" <<
+                "You have to use negative numbers in round brackets. For priority operations also you can use it." <<
+                "For name of file you have to use only latin alphabet and txt format. Your file will save in current folder.";
         }
         else {
             cout << "Incorrect command!" << endl;
