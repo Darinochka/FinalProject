@@ -8,7 +8,7 @@ using namespace std;
 
 struct BinOp{
 public:
-    BinOp(BinOp op, string left, string right) {
+    BinOp(char op, string left, string right) {
         op = op;
         left = left;
         right = right;

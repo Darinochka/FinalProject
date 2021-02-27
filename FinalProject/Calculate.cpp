@@ -38,9 +38,9 @@ vector <string> FindFirstOperation(vector <string>& source) {
     }
     firstNum = stod(source[indexOp - 2]);
     secondNum = stod(source[indexOp - 1]);
-    if (firstNum == secondNum == 0 && source[indexOp] == "^" || (secondNum == 0 && source[indexOp] == "/")) {
+    if ((firstNum == 0 && secondNum == 0 && source[indexOp] == "^") || (secondNum == 0 && source[indexOp] == "/")) {
         source.clear();
-        source.push_back("indefined");
+        source.push_back("undefined");
         return source;
     }
     else {
