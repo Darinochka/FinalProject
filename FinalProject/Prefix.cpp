@@ -7,9 +7,8 @@
 using namespace std;
 
 
-vector <string> Polish(const string& function) {
+vector <string> CreatePrefixExpr(const string& function) {
     bool neg = false, key = true;
-    int length;
     vector <string> output;
     stack <string> stk;
     map <string, int> op = { {"^", 3},

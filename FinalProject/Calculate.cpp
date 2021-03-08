@@ -67,6 +67,9 @@ string Result(const vector <string>& source, const int& x) {
         if (word == "x") {
             word = to_string(x);
         }
+        else if (word == "-x") {
+            word = to_string(-x);
+        }
     }
     return FindFirstOperation(output).front();
 }

@@ -142,8 +142,11 @@
   <ItemGroup>
     <ClCompile Include="Calculate.cpp" />
     <ClCompile Include="FinalProject.cpp" />
-    <ClCompile Include="Polish.cpp" />
+    <ClCompile Include="Postfix.cpp" />
     <ClCompile Include="Tree.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Header.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,24 +1,15 @@
 ﻿#include <iostream>
 #include <fstream>
 #include <vector>
-#include <string>
-#include <list>
 #include <cctype>
 #include <map>
 #include <cstring>
 #include <conio.h>
 #include <iomanip>
+#include "Header.h"
 
 using namespace std;
 
-vector <string> Polish(const string& source);
-
-map <int, string> CreateMapValues(  const vector <string>& source,
-                                    const int& xmin,
-                                    const int& xmax,
-                                    const int& step);
-
-void LaunchRender(const vector<string>& polish);
 
 class Function {
 public:
@@ -27,12 +18,12 @@ public:
         InputArguments(xmin, xmax, step);
         InputPath(path);
         historyFunctions.push_back(function);
-        polishNotation = Polish(function);
+        postfixExpr = CreatePostfixExpr(function);
     }
 
-    void PrintPolishNotation() const {
-        cout << "Polish notation: ";
-        for (auto word : polishNotation) {
+    void PrintPostfixExpr() const {
+        cout << "Reverse Polish notation: ";
+        for (auto word : postfixExpr) {
             cout << word << " ";
         }
         cout << endl;
@@ -52,12 +43,12 @@ public:
     }
 
     void RenderTree() const {
-        LaunchRender(polishNotation);
+        LaunchRender(postfixExpr);
     }
     void Record() const {
         ofstream output;
         output.open(path);
-        map<int, string> values = CreateMapValues(polishNotation, xmin, xmax, step);
+        map<int, string> values = CreateMapValues(postfixExpr, xmin, xmax, step);
         output << "Calculate result of " << function << endl;
         for (const auto& [key, value] : values) {
             output << "x: " << key << " y: " << value << endl;
@@ -68,7 +59,7 @@ public:
 private:
     string function, path;
     int xmin, xmax, step;
-    vector<string> polishNotation, historyFunctions;
+    vector<string> postfixExpr, historyFunctions;
 
     void CheckPath(const string& path) const {
         char temp[5];
@@ -116,8 +107,8 @@ private:
     }
 
     void CheckFunction(const string& function) const{
-        bool key = false, //=false, если до текущего стоял знак или (
-            neg = false; //=true если (-
+        bool key = false,
+            neg = false; 
         int countBrackets = 0;
         vector <char> op = { '+', '-', '*', '/', '^' };
         for (int i = 0; i < function.size(); i++) {
@@ -179,10 +170,9 @@ int main() {
         cin >> command;
         if (command == "func") {
             function.Input();
-            function.PrintPolishNotation();
-            //function.Record();
+            function.PrintPostfixExpr();
+            function.Record();
             function.RenderTree();
-            //рисовка дерева
         } else if (command == "history") {
             function.PrintHistory();
         }
