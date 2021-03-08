@@ -7,28 +7,28 @@
 using namespace std;
 
 double Calcul(const string& operation,
-    const double& firstNum,
-    const double& secondNum) {
+    const double& leftNum,
+    const double& rightNum) {
     if (operation == "^") {
-        return pow(firstNum,secondNum);
+        return pow(leftNum,rightNum);
     }
     else if (operation == "*") {
-        return firstNum * secondNum;
+        return leftNum * rightNum;
     }
     else if (operation == "/") {
-        return firstNum / secondNum;
+        return leftNum / rightNum;
     }
     else if (operation == "+") {
-        return firstNum + secondNum;
+        return leftNum + rightNum;
     }
     else if (operation == "-") {
-        return firstNum - secondNum;
+        return leftNum - rightNum;
     }
 }
 
 vector <string> FindFirstOperation(vector <string>& source) {
     vector <string> op = { "+", "-", "*", "/", "^" };
-    double firstNum, secondNum;
+    double leftNum, rightNum;
     string resultCalc;
     int indexOp;
     for (indexOp = 0; indexOp < source.size(); indexOp++) {
@@ -36,15 +36,15 @@ vector <string> FindFirstOperation(vector <string>& source) {
             break;
         }
     }
-    firstNum = stod(source[indexOp - 2]);
-    secondNum = stod(source[indexOp - 1]);
-    if ((firstNum == 0 && secondNum == 0 && source[indexOp] == "^") || (secondNum == 0 && source[indexOp] == "/")) {
+    leftNum = stod(source[indexOp - 2]);
+    rightNum = stod(source[indexOp - 1]);
+    if ((leftNum == 0 && rightNum == 0 && source[indexOp] == "^") || (rightNum == 0 && source[indexOp] == "/")) {
         source.clear();
         source.push_back("undefined");
         return source;
     }
     else {
-        resultCalc = to_string(Calcul(source[indexOp], firstNum, secondNum));
+        resultCalc = to_string(Calcul(source[indexOp], leftNum, rightNum));
         source.erase(source.begin() + indexOp - 2, source.begin() + indexOp + 1);
         if (source.empty()) {
             source.push_back(resultCalc);
@@ -69,6 +69,9 @@ string Result(const vector <string>& source, const int& x) {
         }
         else if (word == "-x") {
             word = to_string(-x);
+        }
+        else if (word == "e") {
+            word = "2.718281";
         }
     }
     return FindFirstOperation(output).front();

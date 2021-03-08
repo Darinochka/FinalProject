@@ -7,6 +7,8 @@
 #include <conio.h>
 #include <iomanip>
 #include "Header.h"
+#include <sstream>
+#include <iterator>
 
 using namespace std;
 
@@ -82,23 +84,43 @@ private:
         }
     }
 
-    void CheckArguments(const int& xmin, const int& xmax, const int& step) const{
-        if (xmin > xmax ||
-            step > abs(xmin - xmax) ||
-            step < 0) {
+    void CheckArguments(const string& xmin, const string& xmax, const string& step) const{
+        for (auto item : { xmin, xmax, step }) {
+            if (isdigit(item[0]) || item[0] == '-') {
+                for (int i = 1; i < item.size(); i++) {
+                    if (!isdigit(item[i])) {
+                        throw exception();
+                    }
+                }
+            }
+            else {
+                throw exception();
+            }
+            
+        }
+        double min = stod(xmin);
+        double max = stod(xmax);
+        double h = stod(step);
+        if (min > max ||
+            h > abs(min - max) ||
+            h <= 0) {
             throw exception();
         }
     }
 
     void InputArguments(int& xmin, int& xmax, int& step) {
+        string strXmin, strXmax, strStep;
         try {
             cout << "Input Xmin: ";
-            cin >> xmin;
+            cin >> strXmin;
             cout << "Input Xmax: ";
-            cin >> xmax;
+            cin >> strXmax;
             cout << "Input step: ";
-            cin >> step;
-            CheckArguments(xmin, xmax, step);
+            cin >> strStep;
+            CheckArguments(strXmin, strXmax, strStep);
+            xmin = stod(strXmin);
+            xmax = stod(strXmax);
+            step = stod(strStep);
         }
         catch (exception& ex) {
             cout << "Wrong data! Try again...\n";
@@ -111,12 +133,15 @@ private:
             neg = false; 
         int countBrackets = 0;
         vector <char> op = { '+', '-', '*', '/', '^' };
+        if (function.size() < 3) {
+            throw exception();
+        }
         for (int i = 0; i < function.size(); i++) {
             if (isdigit(function[i]) && !key) {
                 key = (!(i == function.size() || isdigit(function[i + 1])));
                 neg = neg && function[i + 1] == ')' ? false : neg;
             }
-            else if (function[i] == 'x' && !key) {
+            else if ((function[i] == 'x' || function[i] == 'e') && !key) {
                 key = true;
                 neg = neg && function[i + 1] == ')' ? false : neg;
             }

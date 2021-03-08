@@ -98,7 +98,7 @@ void Coordinate(ExprNode source, coordinateXY& renderpipe, int x, int y) {
 
 void Render(coordinateXY& renderpipe) {
     int max = -1; //max |X| coordinate
-    int high = abs(renderpipe[renderpipe.size()-1].y);
+    int high = abs(renderpipe[renderpipe.size()-1].y); //high of node
 
     for (auto item : renderpipe) {
         if (abs(item.x) > abs(max)) {
@@ -113,8 +113,7 @@ void Render(coordinateXY& renderpipe) {
         for (auto item : renderpipe) {
             if (abs(item.y) == i) {
                 string temp(item.x - shift - length, ' ');
-                cout << temp;
-                cout << item.element;
+                cout << temp << item.element;
                 shift = item.x;
                 length = item.element.size();
             }

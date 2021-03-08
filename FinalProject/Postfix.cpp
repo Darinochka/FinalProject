@@ -19,7 +19,7 @@ vector <string> CreatePostfixExpr(const string& function) {
                             {"-", 1}, };
     for (const char& word : function) {
         string temp(1, word);
-        if (isdigit(word) || word == 'x' || (word == '-' && neg && key)) {
+        if (isdigit(word) || word == 'x' || word == 'e' || (word == '-' && neg && key)) {
             if (key) {
                 output.push_back(temp);
                 key = false;
