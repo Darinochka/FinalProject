@@ -18,6 +18,8 @@ map <int, string> CreateMapValues(  const vector <string>& source,
                                     const int& xmax,
                                     const int& step);
 
+void LaunchRender(const vector<string>& polish);
+
 class Function {
 public:
     void Input() {
@@ -50,7 +52,7 @@ public:
     }
 
     void RenderTree() const {
-        
+        LaunchRender(polishNotation);
     }
     void Record() const {
         ofstream output;
@@ -178,7 +180,8 @@ int main() {
         if (command == "func") {
             function.Input();
             function.PrintPolishNotation();
-            function.Record();
+            //function.Record();
+            function.RenderTree();
             //рисовка дерева
         } else if (command == "history") {
             function.PrintHistory();
