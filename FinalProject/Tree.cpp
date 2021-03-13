@@ -55,14 +55,10 @@ int HighOfNode(ExprNode source) {
     if (source.GetValue() == "") { // source == BinOp
         return min(HighOfNode(source.GetLeft()), HighOfNode(source.GetRight())) * 2;
     }
-    else {
-        if (source.GetValue().size() == 1) {
-            return 1;
-        }
-        else {
-            return source.GetValue().size() / 2;
-        }
+    else if (source.GetValue().size() == 1) {
+        return 1;
     }
+    return source.GetValue().size() / 2 + 1;
 }
 
 struct Node {
@@ -71,14 +67,34 @@ struct Node {
     int y;
 };
 
-bool operator<(const Node& lhs, const Node& rhs) {
-    int lhsY = abs(lhs.y);
-    int rhsY = abs(rhs.y);
-    return tie(lhsY, lhs.x) <
-           tie(rhsY, rhs.x);
-}
+/*bool operator<(const Node& lhs, const Node& rhs) {
+    //int lhsY = abs(lhs.y);
+    //int rhsY = abs(rhs.y);
+    //return tie(lhsY, lhs.x) < tie(rhsY, rhs.x);
+    //cout << lhsY << ": " << lhs.element << " " << rhsY << ": " << rhs.element << endl;
+    if (lhs.y == rhs.y) {
+        return false;
+    }
+    else {
+        return lhs.y > rhs.y;
+    }
+} */
 
 using coordinateXY = vector <Node> ;
+
+coordinateXY& SortedVector(coordinateXY& source) {
+    bool key = true;
+    while (key) {
+        key = false;
+        for (int i = 0; i < source.size() - 1; i++) {
+            if (source[i].y < source[i + 1].y) {
+                swap(source[i], source[i + 1]);
+                key = true;
+            }
+        }
+    }
+    return source;
+}
 
 void Coordinate(ExprNode source, coordinateXY& renderpipe, int x, int y) {
     int size = HighOfNode(source);
@@ -112,7 +128,7 @@ void Render(coordinateXY& renderpipe) {
         int shift = 0, length = 0;
         for (auto item : renderpipe) {
             if (abs(item.y) == i) {
-                string temp(item.x - shift - length, ' ');
+                string temp(abs(item.x - shift - length), ' ');
                 cout << temp << item.element;
                 shift = item.x;
                 length = item.element.size();
@@ -123,8 +139,7 @@ void Render(coordinateXY& renderpipe) {
 }
 
 coordinateXY& Sort(coordinateXY& renderpipe) {
-    sort(renderpipe.begin(), renderpipe.end());
-    return renderpipe;
+    return SortedVector(renderpipe);
 }
 
 void LaunchRender(const vector<string>& postfixExpr) {

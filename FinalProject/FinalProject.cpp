@@ -133,7 +133,8 @@ private:
             neg = false; 
         int countBrackets = 0;
         vector <char> op = { '+', '-', '*', '/', '^' };
-        if (function.size() < 3) {
+        if (function.size() < 3 || 
+           (function[0] == '(' && function[function.size()-1] == ')' && function.size() < 5)) {
             throw exception();
         }
         for (int i = 0; i < function.size(); i++) {
@@ -181,7 +182,6 @@ private:
             InputFunction(function);
         }
     }
-
 };
 
 int main() {
