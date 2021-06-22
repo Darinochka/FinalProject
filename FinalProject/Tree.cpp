@@ -51,34 +51,11 @@ ExprNode* Transform(vector <string>& v) {
     }
 }
 
-int HighOfNode(ExprNode source) {
-    if (source.GetValue() == "") { // source == BinOp
-        return min(HighOfNode(source.GetLeft()), HighOfNode(source.GetRight())) * 2;
-    }
-    else if (source.GetValue().size() == 1) {
-        return 1;
-    }
-    return source.GetValue().size() / 2 + 1;
-}
-
 struct Node {
     string element;
     int x;
     int y;
 };
-
-/*bool operator<(const Node& lhs, const Node& rhs) {
-    //int lhsY = abs(lhs.y);
-    //int rhsY = abs(rhs.y);
-    //return tie(lhsY, lhs.x) < tie(rhsY, rhs.x);
-    //cout << lhsY << ": " << lhs.element << " " << rhsY << ": " << rhs.element << endl;
-    if (lhs.y == rhs.y) {
-        return false;
-    }
-    else {
-        return lhs.y > rhs.y;
-    }
-} */
 
 using coordinateXY = vector <Node> ;
 
@@ -94,6 +71,16 @@ coordinateXY& SortedVector(coordinateXY& source) {
         }
     }
     return source;
+}
+
+int HighOfNode(ExprNode source) {
+    if (source.GetValue() == "") { // source == BinOp
+        return min(HighOfNode(source.GetLeft()), HighOfNode(source.GetRight())) * 2;
+    }
+    else if (source.GetValue().size() == 1) {
+        return 1;
+    }
+    return source.GetValue().size() / 2 + 1;
 }
 
 void Coordinate(ExprNode source, coordinateXY& renderpipe, int x, int y) {

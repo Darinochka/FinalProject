@@ -141,7 +141,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Calculate.cpp" />
-    <ClCompile Include="FinalProject.cpp" />
+    <ClCompile Include="Main.cpp" />
     <ClCompile Include="Postfix.cpp" />
     <ClCompile Include="Tree.cpp" />
   </ItemGroup>

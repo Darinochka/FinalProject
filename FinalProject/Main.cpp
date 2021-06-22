@@ -208,7 +208,7 @@ int main() {
                 "For name of file you have to use only latin alphabet and txt format. Your file will save in current folder.\n" <<
                 "Write 'exit' in order exit from the programm\n";
         }
-        else {
+        else if (command != "exit") {
             cout << "Incorrect command!" << endl;
         }
     }
